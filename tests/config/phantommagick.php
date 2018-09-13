@@ -10,8 +10,9 @@ return [
 			'visibility' => 'public',
 		],
 	],
+	'directory'  => 'travel',
 	//图片宽度
-	'width'      => '575px',
+	'width'      => '575',
 	//放大倍数
 	'zoomfactor' => 1.5,
 	//0-100,100质量最高

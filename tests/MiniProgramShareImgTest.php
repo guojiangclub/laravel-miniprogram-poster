@@ -17,9 +17,9 @@ class MiniProgramShareImgTest
 		return self::$conv;
 	}
 
-	public static function generateShareImage($dir, $saveName, $route)
+	public static function generateShareImage($saveName, $route)
 	{
-		if (!$dir || !$saveName || !$route) {
+		if (!$saveName || !$route) {
 			return false;
 		}
 
@@ -30,7 +30,7 @@ class MiniProgramShareImgTest
 		];
 
 		$root = __DIR__ . '/../tests';
-		$file = $root . $dir . $saveName;
+		$file = $root . '/' . config('phantommagick.directory') . '/' . $saveName;
 		$url  = $saveName;
 
 		try {

@@ -10,6 +10,7 @@ return [
 			'visibility' => 'public',
 		],
 	],
+	'directory'  => 'travel',
 	//图片宽度
 	'width'      => '575',
 	//放大倍数

@@ -18,9 +18,9 @@ class MiniProgramShareImg
 		return self::$conv;
 	}
 
-	public static function generateShareImage($dir, $saveName, $route)
+	public static function generateShareImage($saveName, $route)
 	{
-		if (!$dir || !$saveName || !$route) {
+		if (!$saveName || !$route) {
 			return false;
 		}
 
@@ -31,7 +31,7 @@ class MiniProgramShareImg
 		];
 
 		$root = config('phantommagick.disks.MiniProgramShare.root');
-		$file = $root . $dir . $saveName;
+		$file = $root . '/' . config('phantommagick.directory') . '/' . $saveName;
 
 		try {
 			$converter = self::init();
@@ -40,7 +40,7 @@ class MiniProgramShareImg
 
 			self::imagePngSizeAdd($file);
 
-			return Storage::disk('MiniProgramShare')->url($dir . $saveName);
+			return Storage::disk('MiniProgramShare')->url(config('phantommagick.directory') . '/' . $saveName);
 		} catch (\Exception $exception) {
 
 			return false;

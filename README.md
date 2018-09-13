@@ -83,5 +83,5 @@ class ShareImgTest extends BaseTest
 
 ```
 
-* 生成图片效果如下：
+* 生成图片效果如下：<br/>
 ![效果图](http://admin.dev.tnf.ibrand.cc/storage/uploads/images/2018_09_13/3A3x1TlJgfFZWfbr58lo5exeBQ3rBCbE9VdTEf6H.jpeg)

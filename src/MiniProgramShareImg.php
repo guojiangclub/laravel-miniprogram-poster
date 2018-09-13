@@ -32,7 +32,6 @@ class MiniProgramShareImg
 
 		$root = config('phantommagick.disks.MiniProgramShare.root');
 		$file = $root . $dir . $saveName;
-		$url  = Storage::disk('MiniProgramShare')->url($dir . $saveName);
 
 		try {
 			$converter = self::init();
@@ -41,7 +40,7 @@ class MiniProgramShareImg
 
 			self::imagePngSizeAdd($file);
 
-			return $url;
+			return Storage::disk('MiniProgramShare')->url($dir . $saveName);
 		} catch (\Exception $exception) {
 
 			return false;

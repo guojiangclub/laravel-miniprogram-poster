@@ -9,7 +9,7 @@ class PhantoMmagickServiceProvider extends ServiceProvider
 	public function boot()
 	{
 		if ($this->app->runningInConsole()) {
-			$this->publishes([__DIR__ . '/../config/config.php' => config_path('phantommagick.php')]);
+			$this->publishes([__DIR__ . '/../config/config.php' => config_path('phantommagick.php')], 'config');
 		}
 	}
 

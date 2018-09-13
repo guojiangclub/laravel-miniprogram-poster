@@ -1,0 +1,64 @@
+{
+	"name": "ibrand/phantommagick",
+	"type": "library",
+	"description": "ibrand component phantommagick",
+	"keywords": [
+		"ibrand",
+		"component",
+		"phantommagick"
+	],
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "tangqi",
+			"email": "tangqi_1987@sina.com"
+		}
+	],
+	"require": {
+		"php": ">=7.0",
+		"laravel/framework": "5.5.*",
+		"anam/phantommagick": "dev-docker",
+		"anam/phantomjs-linux-x86-binary": "^2.1"
+	},
+	"require-dev": {
+		"mockery/mockery": "dev-master",
+		"phpunit/phpunit": "~6.0",
+		"orchestra/testbench": "~3.5",
+		"orchestra/database": "~3.5"
+	},
+	"autoload": {
+		"psr-4": {
+			"iBrand\\Poster\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"iBrand\\Poster\\Test\\": "tests/"
+		}
+	},
+	"extra": {
+		"laravel": {
+			"providers": [
+				"iBrand\\Poster\\PhantoMmagickServiceProvider"
+			],
+			"aliases": {
+				"Converter": "Anam\\PhantomMagick\\Facades\\Converter"
+			}
+		}
+	},
+	"repositories": [
+		{
+			"packagist": false
+		},
+		{
+			"type": "composer",
+			"url": "https://packagist.laravel-china.org"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/ibrandcc/phantommagick"
+		}
+	],
+	"minimum-stability": "dev",
+	"prefer-stable": true
+}

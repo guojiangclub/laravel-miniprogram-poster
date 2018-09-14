@@ -41,7 +41,7 @@ composer require ibrand/phantommagick
     		],
     	],
     	//图片宽度
-    	'width'      => '575',
+    	'width'      => '575px',
     	//放大倍数
     	'zoomfactor' => 1.5,
     	//0-100,100质量最高

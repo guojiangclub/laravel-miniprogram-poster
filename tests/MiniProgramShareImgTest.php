@@ -30,7 +30,7 @@ class MiniProgramShareImgTest
 		];
 
 		$root = __DIR__ . '/../tests';
-		$file = $root . '/' . config('phantommagick.directory') . '/' . $saveName;
+		$file = $root . '/' . $saveName;
 		$url  = $saveName;
 
 		try {

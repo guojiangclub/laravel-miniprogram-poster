@@ -15,8 +15,8 @@ class PhantoMmagickServiceProvider extends ServiceProvider
 
 	public function register()
 	{
-		$config = $this->app['config']->get('filesystems.disks', []);
+		$filesystems = $this->app['config']->get('filesystems.disks', []);
 
-		$this->app['config']->set('filesystems.disks', array_merge(config('phantommagick.disks', []), $config));
+		$this->app['config']->set('filesystems.disks', array_merge(config('phantommagick.disks', []), $filesystems));
 	}
 }

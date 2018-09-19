@@ -17,9 +17,9 @@ class MiniProgramShareImgTest
 		return self::$conv;
 	}
 
-	public static function generateShareImage($saveName, $route)
+	public static function generateShareImage($route)
 	{
-		if (!$saveName || !$route) {
+		if (!$route) {
 			return false;
 		}
 
@@ -29,6 +29,7 @@ class MiniProgramShareImgTest
 			'quality'    => config('phantommagick.quality', 100),
 		];
 
+		$saveName = config('phantommagick.directory') . '/' . md5(uniqid()) . '.png';;
 		$root = __DIR__ . '/../tests';
 		$file = $root . '/' . $saveName;
 		$url  = $saveName;
@@ -38,7 +39,9 @@ class MiniProgramShareImgTest
 
 			$converter->source($route)->toPng($options)->save($file);
 
-			self::imagePngSizeAdd($file);
+			if (config('phantommagick.compress', true)) {
+				self::imagePngSizeAdd($file);
+			}
 
 			return $url;
 		} catch (\Exception $exception) {

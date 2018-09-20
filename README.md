@@ -49,7 +49,7 @@ composer require ibrand/laravel-miniprogram-poster
     ];
 ```
 
-###示例
+### 示例
 ```
     use iBrand\Miniprogram\Poster\MiniProgramShareImg;
     

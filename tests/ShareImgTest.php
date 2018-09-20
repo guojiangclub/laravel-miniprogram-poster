@@ -2,6 +2,9 @@
 
 namespace iBrand\Poster\Test;
 
+use iBrand\Miniprogram\Poster\MiniProgramShareImg;
+use Storage;
+
 class ShareImgTest extends BaseTest
 {
 	/** @test */
@@ -17,7 +20,7 @@ class ShareImgTest extends BaseTest
 	{
 		$route = 'https://m.baidu.com/';
 
-		$file = MiniProgramShareImgTest::generateShareImage($route);
-		$this->assertTrue(file_exists(__DIR__ . '/' . $file));
+		$url = MiniProgramShareImg::generateShareImage($route);
+		$this->assertTrue(Storage::disk('MiniProgramShare')->exists($url));
 	}
 }

@@ -1,59 +1,48 @@
 {
-	"name": "ibrand/phantommagick",
+	"name": "ibrand/laravel-miniprogram-poster",
 	"type": "library",
-	"description": "ibrand component phantommagick",
+	"description": "iBrand's laravel miniprogram poster tool",
 	"keywords": [
 		"ibrand",
 		"component",
-		"phantommagick"
+		"miniprogram",
+		"poster"
 	],
 	"license": "MIT",
 	"authors": [
 		{
 			"name": "tangqi",
-			"email": "tangqi_1987@sina.com"
+			"email": "tangqi@element.vip"
 		}
 	],
 	"require": {
 		"php": ">=7.0",
-		"laravel/framework": "5.5.*",
 		"anam/phantommagick": "dev-docker",
-		"anam/phantomjs-linux-x86-binary": "^2.1"
+		"anam/phantomjs-linux-x86-binary": "~2.1.1"
 	},
 	"require-dev": {
-		"mockery/mockery": "dev-master",
 		"phpunit/phpunit": "~6.0",
 		"orchestra/testbench": "~3.5",
 		"orchestra/database": "~3.5"
 	},
 	"autoload": {
 		"psr-4": {
-			"iBrand\\Poster\\": "src/"
+			"iBrand\\Miniprogram\\Poster\\": "src/"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"iBrand\\Poster\\Test\\": "tests/"
+			"iBrand\\Miniprogram\\Poster\\Test\\": "tests/"
 		}
 	},
 	"extra": {
 		"laravel": {
 			"providers": [
-				"iBrand\\Poster\\PhantoMmagickServiceProvider"
-			],
-			"aliases": {
-				"Converter": "Anam\\PhantomMagick\\Facades\\Converter"
-			}
+				"iBrand\\Miniprogram\\Poster\\PhantoMmagickServiceProvider"
+			]
 		}
 	},
 	"repositories": [
-		{
-			"packagist": false
-		},
-		{
-			"type": "composer",
-			"url": "https://packagist.laravel-china.org"
-		},
 		{
 			"type": "vcs",
 			"url": "https://github.com/ibrandcc/phantommagick"

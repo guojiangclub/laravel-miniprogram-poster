@@ -1,9 +1,9 @@
 <?php
 
-namespace iBrand\Poster;
+namespace iBrand\Miniprogram\Poster;
 
 use Anam\PhantomMagick\Converter;
-use Illuminate\Support\Facades\Storage;
+use Storage;
 
 class MiniProgramShareImg
 {
@@ -25,13 +25,13 @@ class MiniProgramShareImg
 		}
 
 		$options = [
-			'dimension'  => config('phantommagick.width', '575px'),
-			'zoomfactor' => config('phantommagick.zoomfactor', 1.5),
-			'quality'    => config('phantommagick.quality', 100),
+			'dimension'  => config('ibrand.miniprogram-poster.width', '575px'),
+			'zoomfactor' => config('ibrand.miniprogram-poster.zoomfactor', 1.5),
+			'quality'    => config('ibrand.miniprogram-poster.quality', 100),
 		];
 
-		$saveName = config('phantommagick.directory') . '/' . md5(uniqid()) . '.png';
-		$root     = config('phantommagick.disks.MiniProgramShare.root');
+		$saveName = config('ibrand.miniprogram-poster.directory') . '/' . md5(uniqid()) . '.png';
+		$root     = config('ibrand.miniprogram-poster.disks.MiniProgramShare.root');
 		$file     = $root . '/' . $saveName;
 
 		try {
@@ -39,11 +39,12 @@ class MiniProgramShareImg
 
 			$converter->source($route)->toPng($options)->save($file);
 
-			if (config('phantommagick.compress', true)) {
+			if (config('ibrand.miniprogram-poster.compress', true)) {
 				self::imagePngSizeAdd($file);
 			}
 
 			return Storage::disk('MiniProgramShare')->url($saveName);
+
 		} catch (\Exception $exception) {
 
 			return false;
@@ -60,7 +61,7 @@ class MiniProgramShareImg
 		$resource = imagecreatetruecolor($new_width, $new_height);
 		$image    = imagecreatefrompng($file);
 		imagecopyresampled($resource, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-		imagejpeg($resource, $file, config('phantommagick.quality'));
+		imagejpeg($resource, $file, config('ibrand.miniprogram-poster.quality'));
 		imagedestroy($resource);
 	}
 }

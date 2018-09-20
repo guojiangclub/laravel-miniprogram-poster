@@ -7,7 +7,6 @@ use Orchestra\Testbench\TestCase;
 
 abstract class BaseTest extends TestCase
 {
-	use DatabaseMigrations;
 
 	/**
 	 * set up test.
@@ -16,7 +15,6 @@ abstract class BaseTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->loadMigrationsFrom(__DIR__ . '/database');
 	}
 
 	/**
@@ -24,19 +22,11 @@ abstract class BaseTest extends TestCase
 	 */
 	protected function getEnvironmentSetUp($app)
 	{
-		// Setup default database to use sqlite :memory:
-		$app['config']->set('database.default', 'testing');
-		$app['config']->set('database.connections.testing', [
-			'driver'   => 'sqlite',
-			'database' => ':memory:',
-		]);
-		$app['config']->set('repository.cache.enabled', true);
 
-		$shareConfig = require __DIR__ . '/config/phantommagick.php';
+        $app['config']->set('ibrand.miniprogram-poster', require __DIR__.'/../config/config.php');
 
-		$app['config']->set('phantommagick', $shareConfig);
 
-		$app['config']->set('filesystems.disks', array_merge($shareConfig['disks'], $app['config']->get('filesystems.disks')));
+		$app['config']->set('filesystems.disks', $app['config']->get('ibrand.miniprogram-poster.disks'), $app['config']->get('filesystems.disks'));
 	}
 
 	/**
@@ -47,8 +37,7 @@ abstract class BaseTest extends TestCase
 	protected function getPackageProviders($app)
 	{
 		return [
-			\Orchestra\Database\ConsoleServiceProvider::class,
-			\iBrand\Poster\PhantoMmagickServiceProvider::class,
+			\iBrand\Miniprogram\Poster\PhantoMmagickServiceProvider::class,
 		];
 	}
 }

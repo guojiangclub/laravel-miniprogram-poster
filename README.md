@@ -5,7 +5,7 @@
 
 ### 安装
 ```
-composer require ibrand/phantommagick 
+composer require ibrand/laravel-miniprogram-poster 
 
 ```
 
@@ -21,17 +21,15 @@ composer require ibrand/phantommagick
 ```
     iBrand\Poster\PhantoMmagickServiceProvider::class
 ```
-* 发布配置文件
 ```
+    php artisan storage:link
     php artisan vendor:publish --provider="iBrand\Poster\PhantoMmagickServiceProvider" --tag="config"
 ```
-
 ### 配置项
 
 ``` 
-    config/phantommagick.php
-    [
-    	//定义图片存储位置
+    return [
+    	//图片存储位置
     	'disks'      => [
     		'MiniProgramShare' => [
     			'driver'     => 'local',
@@ -48,37 +46,22 @@ composer require ibrand/phantommagick
     	'quality'    => 100,
     	//是否压缩图片
     	'compress'   => true,
-    ]
+    ];
 ```
 
 ###示例
 ```
-tests/ShareImgTest.php
-
-<?php
-
-namespace iBrand\Poster\Test;
-
-class ShareImgTest extends BaseTest
-{
-	/** @test */
-	public function TestConfig()
-	{
-		$config = config('filesystems.disks');
-
-		$this->assertArrayHasKey('MiniProgramShare', $config);
-	}
-
-	/** @test */
-	public function TestGenerateShareImage()
-	{
-		$route = 'https://m.baidu.com/';
-
-		$file = MiniProgramShareImgTest::generateShareImage($route);
-		$this->assertTrue(file_exists(__DIR__ . '/' . $file));
-	}
-}
-
+    use iBrand\Miniprogram\Poster\MiniProgramShareImg;
+    
+    $url = 'https://m.baidu.com/';
+    $result = MiniProgramShareImg::generateShareImage($url);
+    
+    /*返回值：$result
+    [
+        'url'  => 'http://xxx.png',图片访问路径
+        'path' => 'path/to/image', 图片相对路径
+    ]
+    /*
 ```
 
 * 生成图片效果如下：<br/>

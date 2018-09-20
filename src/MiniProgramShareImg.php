@@ -16,59 +16,61 @@ use Storage;
 
 class MiniProgramShareImg
 {
-    public static $conv = null;
+	public static $conv = null;
 
-    public static function init()
-    {
-        if (is_null(self::$conv) || !self::$conv instanceof Converter) {
-            self::$conv = new Converter();
-        }
+	public static function init()
+	{
+		if (is_null(self::$conv) || !self::$conv instanceof Converter) {
+			self::$conv = new Converter();
+		}
 
-        return self::$conv;
-    }
+		return self::$conv;
+	}
 
-    public static function generateShareImage($route)
-    {
-        if (!$route) {
-            return false;
-        }
+	public static function generateShareImage($url, $type = 'default')
+	{
+		if (!$url) {
+			return false;
+		}
 
-        $options = [
-            'dimension' => config('ibrand.miniprogram-poster.width', '575px'),
-            'zoomfactor' => config('ibrand.miniprogram-poster.zoomfactor', 1.5),
-            'quality' => config('ibrand.miniprogram-poster.quality', 100),
-        ];
+		$options = [
+			'dimension'  => config('ibrand.miniprogram-poster.width', '575px'),
+			'zoomfactor' => config('ibrand.miniprogram-poster.zoomfactor', 1.5),
+			'quality'    => config('ibrand.miniprogram-poster.quality', 100),
+		];
 
-        $saveName = config('ibrand.miniprogram-poster.directory').'/'.md5(uniqid()).'.png';
-        $root = config('ibrand.miniprogram-poster.disks.MiniProgramShare.root');
-        $file = $root.'/'.$saveName;
+		$saveName = date('Ymd') . '/' . $type . '_' . md5(uniqid()) . '.png';
+		$file     = config('ibrand.miniprogram-poster.disks.MiniProgramShare.root') . '/' . $saveName;
 
-        try {
-            $converter = self::init();
+		try {
+			$converter = self::init();
 
-            $converter->source($route)->toPng($options)->save($file);
+			$converter->source($url)->toPng($options)->save($file);
 
-            if (config('ibrand.miniprogram-poster.compress', true)) {
-                self::imagePngSizeAdd($file);
-            }
+			if (config('ibrand.miniprogram-poster.compress', true)) {
+				self::imagePngSizeAdd($file);
+			}
 
-            return Storage::disk('MiniProgramShare')->url($saveName);
-        } catch (\Exception $exception) {
-            return false;
-        }
-    }
+			return [
+				'url'  => Storage::disk('MiniProgramShare')->url($saveName),
+				'path' => $saveName,
+			];
+		} catch (\Exception $exception) {
+			return false;
+		}
+	}
 
-    public static function imagePngSizeAdd($file)
-    {
-        list($width, $height, $type) = getimagesize($file);
-        $new_width = $width * 1;
-        $new_height = $height * 1;
+	public static function imagePngSizeAdd($file)
+	{
+		list($width, $height, $type) = getimagesize($file);
+		$new_width  = $width * 1;
+		$new_height = $height * 1;
 
-        //header('Content-Type:image/png');
-        $resource = imagecreatetruecolor($new_width, $new_height);
-        $image = imagecreatefrompng($file);
-        imagecopyresampled($resource, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-        imagejpeg($resource, $file, config('ibrand.miniprogram-poster.quality'));
-        imagedestroy($resource);
-    }
+		//header('Content-Type:image/png');
+		$resource = imagecreatetruecolor($new_width, $new_height);
+		$image    = imagecreatefrompng($file);
+		imagecopyresampled($resource, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+		imagejpeg($resource, $file, config('ibrand.miniprogram-poster.quality'));
+		imagedestroy($resource);
+	}
 }

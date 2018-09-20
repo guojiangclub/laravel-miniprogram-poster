@@ -2,7 +2,6 @@
 
 namespace iBrand\Poster\Test;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Orchestra\Testbench\TestCase;
 
 abstract class BaseTest extends TestCase

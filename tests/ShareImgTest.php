@@ -18,9 +18,15 @@ class ShareImgTest extends BaseTest
 	/** @test */
 	public function TestGenerateShareImage()
 	{
-		$route = 'https://m.baidu.com/';
+		$url    = 'https://m.baidu.com/';
+		$result = MiniProgramShareImg::generateShareImage($url, 'travel');
+		$this->assertTrue(Storage::disk('MiniProgramShare')->exists($result['path']));
 
-		$url = MiniProgramShareImg::generateShareImage($route);
-		$this->assertTrue(Storage::disk('MiniProgramShare')->exists($url));
+		$result = MiniProgramShareImg::generateShareImage('');
+		$this->assertFalse($result);
+
+		$url    = 'www.xxxx.com/';
+		$result = MiniProgramShareImg::generateShareImage($url);
+		$this->assertFalse($result);
 	}
 }

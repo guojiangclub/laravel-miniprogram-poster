@@ -17,7 +17,7 @@
 	],
 	"require": {
 		"php": ">=7.0",
-		"anam/phantommagick": "dev-docker",
+		"anam/phantommagick": "~2.0",
 		"anam/phantomjs-linux-x86-binary": "~2.1.1"
 	},
 	"require-dev": {

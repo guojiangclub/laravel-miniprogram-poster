@@ -25,6 +25,20 @@ composer require ibrand/laravel-miniprogram-poster
     php artisan storage:link
     php artisan vendor:publish --provider="iBrand\Poster\PhantoMmagickServiceProvider" --tag="config"
 ```
+### 字体安装
+* window 将下载的字体文件复制到C:Windows\Fonts目录下或者双击字体文件进行安装
+* linux 
+```
+  cd /usr/share/fonts
+  mkdir newfont
+  #将下载的字体文件复制进这个目录
+  cd newfont
+  mkfontscale
+  mkfontdir
+  fc-cache
+```
+* mac 下载的字体文件 双击字体文件进行安装
+
 ### 配置项
 
 ``` 

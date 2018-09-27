@@ -79,4 +79,4 @@ composer require ibrand/laravel-miniprogram-poster
 ```
 
 * 生成图片效果如下：<br/>
-![效果图](http://admin.dev.tnf.ibrand.cc/storage/uploads/images/2018_09_13/3A3x1TlJgfFZWfbr58lo5exeBQ3rBCbE9VdTEf6H.jpeg)
+![效果图](http://admin.dev.tnf.ibrand.cc/storage/upload/image/72b60d1d2daa9395b7d502e74a08c138.png)

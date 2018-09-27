@@ -67,7 +67,7 @@ composer require ibrand/laravel-miniprogram-poster
 ```
     use iBrand\Miniprogram\Poster\MiniProgramShareImg;
     
-    $url = 'https://m.baidu.com/';
+    $url = 'https://www.ibrand.cc/';
     $result = MiniProgramShareImg::generateShareImage($url);
     
     /*返回值：$result

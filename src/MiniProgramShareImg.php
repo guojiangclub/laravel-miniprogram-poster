@@ -42,22 +42,18 @@ class MiniProgramShareImg
 		$saveName = date('Ymd') . '/' . $type . '_' . md5(uniqid()) . '.png';
 		$file     = config('ibrand.miniprogram-poster.disks.MiniProgramShare.root') . '/' . $saveName;
 
-		try {
-			$converter = self::init();
+		$converter = self::init();
 
-			$converter->source($url)->toPng($options)->save($file);
+		$converter->source($url)->toPng($options)->save($file);
 
-			if (config('ibrand.miniprogram-poster.compress', true)) {
-				self::imagePngSizeAdd($file);
-			}
-
-			return [
-				'url'  => Storage::disk('MiniProgramShare')->url($saveName),
-				'path' => $saveName,
-			];
-		} catch (\Exception $exception) {
-			return false;
+		if (config('ibrand.miniprogram-poster.compress', true)) {
+			self::imagePngSizeAdd($file);
 		}
+
+		return [
+			'url'  => Storage::disk('MiniProgramShare')->url($saveName),
+			'path' => $saveName,
+		];
 	}
 
 	public static function imagePngSizeAdd($file)

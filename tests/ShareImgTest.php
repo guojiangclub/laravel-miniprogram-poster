@@ -18,15 +18,13 @@ class ShareImgTest extends BaseTest
 	/** @test */
 	public function TestGenerateShareImage()
 	{
-		$url    = 'https://m.baidu.com/';
-		$result = MiniProgramShareImg::generateShareImage($url, 'travel');
+		config(['ibrand.miniprogram-poster.width' => '1300px']);
+
+		$url    = 'https://www.ibrand.cc/';
+		$result = MiniProgramShareImg::generateShareImage($url, 'ibrand');
 		$this->assertTrue(Storage::disk('MiniProgramShare')->exists($result['path']));
 
 		$result = MiniProgramShareImg::generateShareImage('');
-		$this->assertFalse($result);
-
-		$url    = 'www.xxxx.com/';
-		$result = MiniProgramShareImg::generateShareImage($url);
 		$this->assertFalse($result);
 	}
 }

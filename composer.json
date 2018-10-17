@@ -42,12 +42,6 @@
 			]
 		}
 	},
-	"repositories": [
-		{
-			"type": "vcs",
-			"url": "https://github.com/ibrandcc/phantommagick"
-		}
-	],
 	"minimum-stability": "dev",
 	"prefer-stable": true
 }

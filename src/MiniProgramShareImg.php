@@ -12,6 +12,7 @@
 namespace iBrand\Miniprogram\Poster;
 
 use Anam\PhantomMagick\Converter;
+use Illuminate\Database\Eloquent\Model;
 use Storage;
 
 class MiniProgramShareImg
@@ -47,7 +48,7 @@ class MiniProgramShareImg
 		$converter->source($url)->toPng($options)->save($file);
 
 		if (config('ibrand.miniprogram-poster.compress', true)) {
-			self::imagePngSizeAdd($file);
+			self::compress($file);
 		}
 
 		return [
@@ -56,17 +57,28 @@ class MiniProgramShareImg
 		];
 	}
 
-	public static function imagePngSizeAdd($file)
+	public static function compress($file)
 	{
+		if (!file_exists($file)) {
+			return;
+		}
+
 		list($width, $height, $type) = getimagesize($file);
 		$new_width  = $width * 1;
 		$new_height = $height * 1;
 
-		//header('Content-Type:image/png');
 		$resource = imagecreatetruecolor($new_width, $new_height);
 		$image    = imagecreatefrompng($file);
 		imagecopyresampled($resource, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-		imagejpeg($resource, $file, config('ibrand.miniprogram-poster.quality'));
+		imagepng($resource, $file, config('ibrand.miniprogram-poster.quality', 9));
 		imagedestroy($resource);
 	}
+
+	public static function attach(Model $subject, array $path)
+	{
+		$poster = new Poster(['content' => $path]);
+
+		$subject->posters()->save($poster);
+	}
+
 }

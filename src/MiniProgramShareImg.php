@@ -28,7 +28,14 @@ class MiniProgramShareImg
 		return self::$conv;
 	}
 
-	public static function generateShareImage($url, $type = 'default')
+	/**
+	 * 生成海报
+	 *
+	 * @param $url
+	 *
+	 * @return array|bool
+	 */
+	public static function generateShareImage($url)
 	{
 		if (!$url) {
 			return false;
@@ -40,7 +47,7 @@ class MiniProgramShareImg
 			'quality'    => config('ibrand.miniprogram-poster.quality', 100),
 		];
 
-		$saveName = date('Ymd') . '/' . $type . '_' . md5(uniqid()) . '.png';
+		$saveName = date('Ymd') . '/' . md5(uniqid()) . '.png';
 		$file     = config('ibrand.miniprogram-poster.disks.MiniProgramShare.root') . '/' . $saveName;
 
 		$converter = self::init();
@@ -57,12 +64,13 @@ class MiniProgramShareImg
 		];
 	}
 
+	/**
+	 * 压缩图片
+	 *
+	 * @param $file
+	 */
 	public static function compress($file)
 	{
-		if (!file_exists($file)) {
-			return;
-		}
-
 		list($width, $height, $type) = getimagesize($file);
 		$new_width  = $width * 1;
 		$new_height = $height * 1;
@@ -74,11 +82,52 @@ class MiniProgramShareImg
 		imagedestroy($resource);
 	}
 
-	public static function attach(Model $subject, array $path)
+	/**
+	 * 绑定关系
+	 *
+	 * @param \Illuminate\Database\Eloquent\Model $model
+	 * @param array                               $path
+	 *
+	 * @return array
+	 */
+	public static function attach(Model $model, array $path = []): array
 	{
-		$poster = new Poster(['content' => $path]);
+		$poster = Poster::where('posterable_id', $model->id)->where('posterable_type', get_class($model))->first();
+		if ($poster && empty($path)) {
 
-		$subject->posters()->save($poster);
+			return $poster->content;
+		} elseif ($poster && !empty($path)) {
+			$poster->content = $path;
+			$poster->save();
+
+			return $path;
+		} elseif (!$poster && !empty($path)) {
+			$poster = new Poster(['content' => $path]);
+			$model->posters()->save($poster);
+
+			return $path;
+		} else {
+			return [];
+		}
 	}
 
+	/**
+	 * @param \Illuminate\Database\Eloquent\Model $model
+	 * @param                                     $url
+	 * @param bool                                $rebuild
+	 *
+	 * @return array|bool
+	 */
+	public static function run(Model $model, $url, $rebuild = false)
+	{
+		$poster = self::attach($model);
+		if ($rebuild === false && !empty($poster)) {
+			return $poster;
+		}
+
+		$result = self::generateShareImage($url);
+		$poster = self::attach($model, $result);
+
+		return $poster;
+	}
 }

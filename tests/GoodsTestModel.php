@@ -1,11 +1,11 @@
 <?php
 
-namespace iBrand\Poster\Test;
+namespace iBrand\Miniprogram\Poster\Test;
 
 use iBrand\Miniprogram\Poster\HasPoster;
 use Illuminate\Database\Eloquent\Model;
 
-class GoodsTest extends Model
+class GoodsTestModel extends Model
 {
 	use HasPoster;
 

@@ -8,6 +8,15 @@ class CreatePointTestTable extends Migration
 {
 	public function up()
 	{
+		Schema::create('posters', function (Blueprint $table) {
+			$table->increments('id');
+			$table->text('content')->nullable();
+			$table->integer('posterable_id')->unsigned();
+			$table->string('posterable_type');
+			$table->timestamps();
+			$table->softDeletes();
+		});
+
 		Schema::create('goods', function (Blueprint $table) {
 			$table->increments('id');
 			$table->string('name');
@@ -22,6 +31,7 @@ class CreatePointTestTable extends Migration
 	 */
 	public function down()
 	{
+		Schema::drop('posters');
 		Schema::drop('goods');
 	}
 }

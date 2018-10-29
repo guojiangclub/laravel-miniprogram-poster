@@ -1,6 +1,6 @@
 <?php
 
-namespace iBrand\Poster\Test;
+namespace iBrand\Miniprogram\Poster\Test;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Orchestra\Testbench\TestCase;
@@ -52,15 +52,15 @@ abstract class BaseTest extends TestCase
 
 	public function seedGoods()
 	{
-		GoodsTest::create([
+		GoodsTestModel::create([
 			'name' => '女款 防水透气抓地耐磨越野跑鞋  A1NM',
 		]);
 
-		GoodsTest::create([
+		GoodsTestModel::create([
 			'name' => 'The North Face 男款 硬壳夹克/冲锋衣 A55W',
 		]);
 
-		GoodsTest::create([
+		GoodsTestModel::create([
 			'name' => 'The North Face男款 跑步鞋 A04F ',
 		]);
 	}

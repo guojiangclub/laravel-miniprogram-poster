@@ -50,8 +50,8 @@ composer require ibrand/laravel-miniprogram-poster
     	'width'      => '575px',
     	//放大倍数
     	'zoomfactor' => 1.5,
-    	//0-100,100质量最高
-    	'quality'    => 100,
+    	//1-9,9质量最高
+    	'quality'    => 9,
     	//是否压缩图片
     	'compress'   => true,
     ];

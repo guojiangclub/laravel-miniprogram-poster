@@ -60,9 +60,12 @@ composer require ibrand/laravel-miniprogram-poster
 ### 使用
 ```
 use iBrand\Miniprogram\Poster\MiniProgramShareImg;
+use iBrand\Miniprogram\Poster\Poster;
     
-$url = 'https://www.ibrand.cc/';
-$result = MiniProgramShareImg::generateShareImage($url);
+config(['ibrand.miniprogram-poster.width' => '1300px']);
+$url   = 'https://www.ibrand.cc/';
+$goods = GoodsTestModel::find(1);
+$result = MiniProgramShareImg::run($goods, $url);
 
 ```
 返回结果：

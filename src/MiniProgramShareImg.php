@@ -87,31 +87,33 @@ class MiniProgramShareImg
 	 *
 	 * @param \Illuminate\Database\Eloquent\Model $model
 	 * @param array                               $path
-	 *
-	 * @return array
 	 */
-	public static function attach(Model $model, array $path = []): array
+	public static function attach(Model $model, array $path)
 	{
-		$poster = Poster::where('posterable_id', $model->id)->where('posterable_type', get_class($model))->first();
-		if ($poster && empty($path)) {
-
-			return $poster->content;
-		} elseif ($poster && !empty($path)) {
-			$poster->content = $path;
-			$poster->save();
-
-			return $path;
-		} elseif (!$poster && !empty($path)) {
-			$poster = new Poster(['content' => $path]);
-			$model->posters()->save($poster);
-
-			return $path;
-		} else {
-			return [];
-		}
+		$poster = new Poster(['content' => $path]);
+		$model->posters()->save($poster);
 	}
 
 	/**
+	 * 关系是否存在
+	 *
+	 * @param \Illuminate\Database\Eloquent\Model $model
+	 *
+	 * @return mixed
+	 */
+	public static function exists(Model $model)
+	{
+		$poster = Poster::where('posterable_id', $model->id)->where('posterable_type', get_class($model))->first();
+		if ($poster) {
+			return $poster;
+		}
+
+		return false;
+	}
+
+	/**
+	 * 生成海报
+	 *
 	 * @param \Illuminate\Database\Eloquent\Model $model
 	 * @param                                     $url
 	 * @param bool                                $rebuild
@@ -120,14 +122,22 @@ class MiniProgramShareImg
 	 */
 	public static function run(Model $model, $url, $rebuild = false)
 	{
-		$poster = self::attach($model);
-		if ($rebuild === false && !empty($poster)) {
-			return $poster;
+		$poster = self::exists($model);
+		if (!$poster) {
+			$path = self::generateShareImage($url);
+			self::attach($model, $path);
+		} else {
+			if ($rebuild === false) {
+				$path = $poster->content;
+			} else {
+				$path = self::generateShareImage($url);
+
+				$poster->content = $path;
+
+				$poster->save();
+			}
 		}
 
-		$result = self::generateShareImage($url);
-		$poster = self::attach($model, $result);
-
-		return $poster;
+		return $path;
 	}
 }

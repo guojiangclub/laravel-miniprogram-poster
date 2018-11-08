@@ -131,6 +131,10 @@ class MiniProgramShareImg
 				$path = $poster->content;
 			} else {
 				$path = self::generateShareImage($url);
+				$old  = $poster->content;
+				if (!empty($old) && isset($old['path']) && Storage::disk('MiniProgramShare')->exists($old['path'])) {
+					Storage::disk('MiniProgramShare')->delete($old['path']);
+				}
 
 				$poster->content = $path;
 

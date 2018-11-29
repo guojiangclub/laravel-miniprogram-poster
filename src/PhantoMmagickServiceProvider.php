@@ -15,21 +15,28 @@ use Illuminate\Support\ServiceProvider;
 
 class PhantoMmagickServiceProvider extends ServiceProvider
 {
-	public function boot()
-	{
-		if ($this->app->runningInConsole()) {
-			$this->publishes([__DIR__ . '/../config/config.php' => config_path('ibrand/miniprogram-poster.php')], 'config');
-		}
-	}
+    public function boot()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->publishes([__DIR__.'/../config/config.php' => config_path('ibrand/miniprogram-poster.php')], 'config');
 
-	public function register()
-	{
-		$this->mergeConfigFrom(
-			__DIR__ . '/../config/config.php', 'ibrand.miniprogram-poster'
-		);
+            if (!class_exists('CreatePosterTables')) {
+                $timestamp = date('Y_m_d_His', time());
+                $this->publishes([
+                    __DIR__.'/../migrations/create_poster_tables.php.stub' => database_path('migrations/'.$timestamp.'_create_poster_tables.php'),
+                ], 'migrations');
+            }
+        }
+    }
 
-		$filesystems = $this->app['config']->get('filesystems.disks', []);
+    public function register()
+    {
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/config.php', 'ibrand.miniprogram-poster'
+        );
 
-		$this->app['config']->set('filesystems.disks', array_merge(config('ibrand.miniprogram-poster.disks'), $filesystems));
-	}
+        $filesystems = $this->app['config']->get('filesystems.disks', []);
+
+        $this->app['config']->set('filesystems.disks', array_merge(config('ibrand.miniprogram-poster.disks'), $filesystems));
+    }
 }

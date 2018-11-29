@@ -37,19 +37,26 @@ class ShareImgTest extends BaseTest
 		$url   = 'https://www.ibrand.cc/';
 		$goods = GoodsTestModel::find(1);
 
-		$result = MiniProgramShareImg::run($goods, $url, true);
-		$this->assertTrue(Storage::disk('MiniProgramShare')->exists($result['path']));
-		$this->assertSame(1, count($goods->posters));
+		//1. first build.
+        $result = MiniProgramShareImg::run($goods, $url);
+        $oldPath = $result['path'];
+        $this->assertTrue(Storage::disk('MiniProgramShare')->exists($result['path']));
+        $this->assertEquals(1, count($goods->posters));
 
-		$result = MiniProgramShareImg::run($goods, $url);
-		$this->assertTrue(Storage::disk('MiniProgramShare')->exists($result['path']));
+        //2. rebuild and delete old.
+        $result = MiniProgramShareImg::run($goods, $url,true);
+        $oldPath2= $result['path'];
+        $this->assertTrue(Storage::disk('MiniProgramShare')->exists($result['path']));
+        $this->assertFalse(Storage::disk('MiniProgramShare')->exists($oldPath));
+        $this->assertEquals(1, count($goods->posters));
 
-		$result = MiniProgramShareImg::run($goods, $url, true);
-		$this->assertTrue(Storage::disk('MiniProgramShare')->exists($result['path']));
-		$this->assertSame(1, count($goods->posters));
+        //3. rebuild but not delete old.
+        $this->app['config']->set('ibrand.miniprogram-poster.delete',false);
+        $result = MiniProgramShareImg::run($goods, $url,true);
+        $this->assertTrue(Storage::disk('MiniProgramShare')->exists($result['path']));
+        $this->assertTrue(Storage::disk('MiniProgramShare')->exists($oldPath2));
 
 		$poster = Poster::find(1);
-		$this->assertSame(1, count($poster->posterable));
-		$this->assertSame(GoodsTestModel::class, get_class($poster->posterable));
+		$this->assertEquals(GoodsTestModel::class, get_class($poster->posterable));
 	}
 }

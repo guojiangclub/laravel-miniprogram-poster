@@ -15,8 +15,6 @@ class CreatePosterTables extends Migration
                 $table->integer('posterable_id')->unsigned();
                 $table->string('posterable_type');
                 $table->timestamps();
-                $table->softDeletes();
-
                 $table->index(['posterable_id', 'posterable_type']);
             });
         }

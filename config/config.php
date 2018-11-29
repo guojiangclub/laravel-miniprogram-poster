@@ -27,4 +27,6 @@ return [
 	'quality'    => 9,
 	//是否压缩图片
 	'compress'   => true,
+    //是否删除废弃图片文件
+    'delete'=>true,
 ];

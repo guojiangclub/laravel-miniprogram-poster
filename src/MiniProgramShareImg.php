@@ -47,7 +47,7 @@ class MiniProgramShareImg
 			'quality'    => config('ibrand.miniprogram-poster.quality', 100),
 		];
 
-		$saveName = date('Ymd') . '/' . md5(uniqid()) . '.png';
+		$saveName = config('ibrand.miniprogram-poster.default.app') . '/' . date('Ymd') . '/' . md5(uniqid()) . '.png';
 		$storage  = config('ibrand.miniprogram-poster.default.storage');
 		$file     = config('ibrand.miniprogram-poster.disks.' . $storage . '.root') . '/' . $saveName;
 

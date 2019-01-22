@@ -12,6 +12,7 @@
 return [
 	'default'    => [
 		'storage' => env('DEFAULT_POSTER_STORAGE', 'qiniu'),
+		'app'     => env('APP_NAME', 'default'),
 	],
 	//图片存储位置
 	'disks'      => [

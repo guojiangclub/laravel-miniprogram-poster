@@ -18,7 +18,8 @@
 	"require": {
 		"php": ">=7.0",
 		"anam/phantommagick": "~2.0",
-		"anam/phantomjs-linux-x86-binary": "~2.1.1"
+		"anam/phantomjs-linux-x86-binary": "~2.1.1",
+		"overtrue/laravel-filesystem-qiniu": "^1.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~6.0",

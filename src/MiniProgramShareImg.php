@@ -97,8 +97,7 @@ class MiniProgramShareImg
 	 */
 	public static function attach(Model $model, array $path)
 	{
-		$poster = new Poster(['content' => $path]);
-		$model->posters()->save($poster);
+		$poster = Poster::create(['content' => $path, 'posterable_id' => $model->id, 'posterable_type' => get_class($model)]);
 
 		return $poster;
 	}
@@ -137,8 +136,11 @@ class MiniProgramShareImg
 			$path = $poster->content;
 		}
 
-		if (!$poster || $rebuild) {
+		if ($rebuild || !$poster) {
 			$path = self::generateShareImage($url);
+		}
+
+		if (!$poster) {
 			self::attach($model, $path);
 		}
 

@@ -131,9 +131,11 @@ class MiniProgramShareImg
 	 */
 	public static function run(Model $model, $url, $rebuild = false)
 	{
+		$path   = [];
 		$poster = self::exists($model);
-
-		$path = [];
+		if ($poster) {
+			$path = $poster->content;
+		}
 
 		if (!$poster || $rebuild) {
 			$path = self::generateShareImage($url);

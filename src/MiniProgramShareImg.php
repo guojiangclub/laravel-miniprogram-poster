@@ -53,14 +53,14 @@ class MiniProgramShareImg
 
 		$converter = self::init();
 
-		$converter->source($url)->toPng($options)->save($file);
-
-		if (config('ibrand.miniprogram-poster.compress', true)) {
-			self::compress($file);
-		}
-
 		if ('qiniu' == $storage) {
-			Storage::disk($storage)->put($saveName, file_get_contents($file));
+			$converter->adapter('qiniu')->source($url)->toPng($options)->save($saveName);
+		} else {
+			$converter->source($url)->toPng($options)->save($file);
+
+			if (config('ibrand.miniprogram-poster.compress', true)) {
+				self::compress($file);
+			}
 		}
 
 		return [

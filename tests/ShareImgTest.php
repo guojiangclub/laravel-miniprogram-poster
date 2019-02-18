@@ -79,4 +79,14 @@ class ShareImgTest extends BaseTest
 		$this->assertTrue(Storage::disk('qiniu')->exists($result['path']));
 		$this->assertEquals(1, count($goods->posters));
 	}
+
+	/** @test */
+	public function TestAdapterQiNiu()
+	{
+		config(['ibrand.miniprogram-poster.default.storage' => 'qiniu']);
+
+		$url    = 'https://www.ibrand.cc/';
+		$result = MiniProgramShareImg::generateShareImage($url);
+		$this->assertTrue(Storage::disk('qiniu')->exists($result['path']));
+	}
 }

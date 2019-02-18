@@ -17,8 +17,7 @@
 	],
 	"require": {
 		"php": ">=7.0",
-		"anam/phantommagick": "~2.0",
-		"anam/phantomjs-linux-x86-binary": "~2.1.1",
+		"anam/phantommagick": "dev-docker as 2.0.0",
 		"overtrue/laravel-filesystem-qiniu": "^1.0"
 	},
 	"require-dev": {
@@ -44,5 +43,18 @@
 		}
 	},
 	"minimum-stability": "dev",
-	"prefer-stable": true
+	"prefer-stable": true,
+	"repositories": [
+		{
+			"packagist": false
+		},
+		{
+			"type": "composer",
+			"url": "https://packagist.laravel-china.org"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/ibrandcc/phantommagick"
+		}
+	]
 }

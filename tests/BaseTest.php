@@ -47,6 +47,7 @@ abstract class BaseTest extends TestCase
 		return [
 			\Orchestra\Database\ConsoleServiceProvider::class,
 			\iBrand\Miniprogram\Poster\PhantoMmagickServiceProvider::class,
+			\Anam\PhantomMagick\ConverterServiceProvider::class,
 		];
 	}
 

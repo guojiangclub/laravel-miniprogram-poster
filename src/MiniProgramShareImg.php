@@ -140,8 +140,12 @@ class MiniProgramShareImg
 			$path = self::generateShareImage($url);
 		}
 
+		if (empty($path)) {
+			return false;
+		}
+
 		if (!$poster) {
-			self::attach($model, $path);
+			$poster = self::attach($model, $path);
 		}
 
 		if ($poster && $rebuild) {

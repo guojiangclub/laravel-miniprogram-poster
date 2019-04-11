@@ -30,7 +30,7 @@ class Poster extends Model
 			return json_decode($value, true);
 		}
 
-		return [];
+		return null;
 	}
 
 	public function setContentAttribute($value)

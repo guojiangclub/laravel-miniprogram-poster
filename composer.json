@@ -12,7 +12,7 @@
 	"authors": [
 		{
 			"name": "tangqi",
-			"email": "tangqi@element.vip"
+			"email": "tangqi@ibrand.cc"
 		}
 	],
 	"require": {
@@ -45,13 +45,6 @@
 	"minimum-stability": "dev",
 	"prefer-stable": true,
 	"repositories": [
-		{
-			"packagist": false
-		},
-		{
-			"type": "composer",
-			"url": "https://packagist.laravel-china.org"
-		},
 		{
 			"type": "vcs",
 			"url": "https://github.com/ibrandcc/phantommagick"

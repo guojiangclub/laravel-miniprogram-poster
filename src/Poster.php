@@ -15,24 +15,28 @@ use Illuminate\Database\Eloquent\Model;
 
 class Poster extends Model
 {
-    public $table = 'posters';
+	public $table = 'posters';
 
-    public $guarded = ['id'];
+	public $guarded = ['id'];
 
-    public function posterable()
-    {
-        return $this->morphTo();
-    }
+	public function posterable()
+	{
+		return $this->morphTo();
+	}
 
-    public function getContentAttribute($value)
-    {
-        return json_decode($value, true);
-    }
+	public function getContentAttribute($value)
+	{
+		if ($value) {
+			return json_decode($value, true);
+		}
 
-    public function setContentAttribute($value)
-    {
-        if (is_array($value)) {
-            $this->attributes['content'] = json_encode($value);
-        }
-    }
+		return [];
+	}
+
+	public function setContentAttribute($value)
+	{
+		if (is_array($value)) {
+			$this->attributes['content'] = json_encode($value);
+		}
+	}
 }

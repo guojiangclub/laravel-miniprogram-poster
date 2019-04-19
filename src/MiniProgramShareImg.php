@@ -131,9 +131,11 @@ class MiniProgramShareImg
 	public static function run(Model $model, $url, $rebuild = false)
 	{
 		$path   = [];
+		$old    = [];
 		$poster = self::exists($model);
 		if ($poster) {
 			$path = $poster->content;
+			$old  = $poster->content;
 		}
 
 		if ($rebuild || !$poster) {
@@ -149,13 +151,13 @@ class MiniProgramShareImg
 		}
 
 		if ($poster && $rebuild) {
-			$old     = $poster->content;
-			$storage = config('ibrand.miniprogram-poster.default.storage');
-			if (config('ibrand.miniprogram-poster.delete', true) && !empty($old) && isset($old['path']) && Storage::disk($storage)->exists($old['path'])) {
-				Storage::disk($storage)->delete($old['path']);
-			}
 			$poster->content = $path;
 			$poster->save();
+		}
+
+		$storage = config('ibrand.miniprogram-poster.default.storage');
+		if (config('ibrand.miniprogram-poster.delete', true) && !empty($old) && isset($old['path']) && Storage::disk($storage)->exists($old['path'])) {
+			Storage::disk($storage)->delete($old['path']);
 		}
 
 		return $path;

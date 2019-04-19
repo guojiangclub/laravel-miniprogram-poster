@@ -63,10 +63,14 @@ class MiniProgramShareImg
 			}
 		}
 
-		return [
-			'url'  => Storage::disk($storage)->url($saveName),
-			'path' => $saveName,
-		];
+		if (Storage::disk($storage)->exists($saveName)) {
+			return [
+				'url'  => Storage::disk($storage)->url($saveName),
+				'path' => $saveName,
+			];
+		} else {
+			return false;
+		}
 	}
 
 	/**

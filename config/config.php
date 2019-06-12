@@ -8,11 +8,18 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+use HeadlessChromium\Page;
 
 return [
+
+    //环境变量“chrome_path”，活着chrome可执行文件
+    'chromeBinaries'=>'chromium-browser',
+
 	'default'    => [
 		'storage' => env('DEFAULT_POSTER_STORAGE', 'qiniu'),
 		'app'     => env('APP_NAME', 'default'),
+
+        'browser_factory'=>env('DEFAULT_POSTER_BROWSER_FACTORY', 'chromium'),
 	],
 	'disks'      => [
 		'qiniu'            => [
@@ -36,12 +43,28 @@ return [
 			'visibility' => 'public',
 		],
 	],
-	//图片宽度
-	'width'      => '575px',
-	//放大倍数
-	'zoomfactor' => 1.5,
-	//1-9,9质量最高
-	'quality'    => 9,
+
+    //浏览器设置
+    'browser_factory_info'=>[
+
+        'chromium'=>[
+
+            'options'=>[
+
+               'windowSize' => [375,667]
+
+             ],
+             'wait_fornavigation_event'=>page::NETWORK_IDLE,
+
+             'wait_fornavigation_time_out'=>10000
+
+        ],
+
+        //....可自行添加初始化配置详情见（https://github.com/chrome-php/headless-chromium-php）
+
+    ],
+
+
 	//是否压缩图片
 	'compress'   => true,
 	//是否删除废弃图片文件

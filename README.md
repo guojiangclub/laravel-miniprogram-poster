@@ -24,11 +24,11 @@
 ```
 composer require ibrand/laravel-miniprogram-poster:~2.0 -vvv
 ```
-- 低于 Laravel5.5 版本，`config/app.php` 文件中 `providers` 添加`iBrand\Poster\PhantoMmagickServiceProvider::class`
+- 低于 Laravel5.5 版本，`config/app.php` 文件中 `providers` 添加` iBrand\Miniprogram\Poster\PhantoMmagickServiceProvider::class`
 
 - 图片保存在  `storage/app/public` 下所以需要执行  `php artisan storage:link`
 
-- 如需自定义配置请执行 `php artisan vendor:publish --provider="iBrand\Poster\PhantoMmagickServiceProvider" --tag="config"`
+- 如需自定义配置请执行 `php artisan vendor:publish --provider="iBrand\Miniprogram\Poster\PhantoMmagickServiceProvider" --tag="config"`
 
 ### 配置项
 

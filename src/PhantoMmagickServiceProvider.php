@@ -12,6 +12,8 @@
 namespace iBrand\Miniprogram\Poster;
 
 use Illuminate\Support\ServiceProvider;
+use HeadlessChromium\BrowserFactory;
+
 
 class PhantoMmagickServiceProvider extends ServiceProvider
 {
@@ -27,6 +29,7 @@ class PhantoMmagickServiceProvider extends ServiceProvider
 				], 'migrations');
 			}
 		}
+
 	}
 
 	public function register()
@@ -40,5 +43,15 @@ class PhantoMmagickServiceProvider extends ServiceProvider
 		$this->app['config']->set('filesystems.disks', array_merge(config('ibrand.miniprogram-poster.disks'), $filesystems));
 
 		$this->app->register(\Overtrue\LaravelFilesystem\Qiniu\QiniuStorageServiceProvider::class);
+
+        $this->app->singleton('MiniProgramShareImg', function($app) {
+
+            return new MiniProgramShareImg(config('ibrand.miniprogram-poster'),new BrowserFactory(config('ibrand.miniprogram-poster.chromeBinaries')));
+        });
 	}
+
+    public function provides()
+    {
+        return  [MiniProgramShareImg::class,'MiniProgramShareImg'];
+    }
 }

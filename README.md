@@ -18,7 +18,7 @@
 
 扫码进入商品详情页分享生成图文体验
 
-![iBrand开源体验店](https://iyoyo.oss-cn-hangzhou.aliyuncs.com/post/miniprogramcode/1.jpg)
+![果酱小店](https://iyoyo.oss-cn-hangzhou.aliyuncs.com/post/miniprogramcode/ec.qrcode.png)
 
 ## 安装
 ```

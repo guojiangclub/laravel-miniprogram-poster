@@ -17,7 +17,7 @@
 	],
 	"require": {
 		"php": ">=7.0",
-		"anam/phantommagick": "dev-docker as 2.0.0",
+		"ibrand/phantomagick": "dev-master",
 		"overtrue/laravel-filesystem-qiniu": "^1.0"
 	},
 	"require-dev": {
